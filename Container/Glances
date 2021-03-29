@@ -1,1 +1,17 @@
-1
+docker run --privileged -d --name=glances \
+ --net glances \
+ --dns 10.0.5.3 \
+ --hostname Glances-RD-ROUT01 \
+ --restart always \
+ --pid="host" \
+ -p 61208:61208 \
+ -p 61209:61209 \
+ -e GLANCES_OPT="-w" \
+ -v /etc/passwd:/host/etc/passwd:ro \
+ -v /etc/group:/host/etc/group:ro \
+ -v /proc:/host/proc:ro \
+ -v /sys:/host/sys:ro \
+ -v /etc/os-release:/host/etc/os-release:ro \
+ --cap-add SYS_PTRACE \
+ --security-opt apparmor=unconfined \
+ nicolargo/glances:latest
