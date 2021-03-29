@@ -1,0 +1,8 @@
+podman run --detach \
+           --name sslproxy_app \
+           --network host \
+           --privileged \
+           --volume /etc/localtime:/etc/localtime:ro \
+           --volume /mnt/data_ext/sslproxy/data:/data \
+           --volume /mnt/data_ext/sslproxy/letsencrypt:/etc/letsencrypt \
+           jc21/nginx-proxy-manager:latest
