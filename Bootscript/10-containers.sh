@@ -4,6 +4,8 @@
 VLAN=5
 IPV4_IP_NETDATA="10.0.5.4"
 IPV4_IP_GLANCES="10.0.5.5"
+IPV4_IP_PROXYMANAGER="10.0.5.6"
+IPV4_IP_MARIADB="10.0.5.7"
 
 # This is the IP address of the container. You may want to set it to match
 # your own network structure such as 192.168.5.3 or similar.
@@ -14,6 +16,8 @@ IPV4_GW="10.0.5.1/24"
 # container name; e.g. nextdns, pihole, adguardhome, etc.
 CONTAINER_NETDATA=netdata
 CONTAINER_GLANCES=glances
+CONTAINER_PROXYMANAGER=proxymanager
+CONTAINER_MARIADB=mariadb
 
 ## network configuration and startup:
 CNI_PATH=/mnt/data/podman/cni
@@ -51,7 +55,12 @@ ip route add ${IPV4_IP_NETDATA}/32 dev br${VLAN}.mac
 # add IPv4 route to DNS container
 ip route add ${IPV4_IP_GLANCES}/32 dev br${VLAN}.mac
 #######################################################################################
-
+# add IPv4 route to DNS container
+ip route add ${IPV4_IP_PROXYMANAGER}/32 dev br${VLAN}.mac
+#######################################################################################
+# add IPv4 route to DNS container
+ip route add ${IPV4_IP_MARIADB}/32 dev br${VLAN}.mac
+#######################################################################################
 
 #######################################################################################
 if podman container exists ${CONTAINER_NETDATA}; then
@@ -64,4 +73,16 @@ if podman container exists ${CONTAINER_GLANCES}; then
   podman start ${CONTAINER_GLANCES}
 else
   logger -s -t podman-dns -p ERROR Container $CONTAINER_GLANCES not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+fi
+#######################################################################################
+if podman container exists ${CONTAINER_PROXYMANAGER}; then
+  podman start ${CONTAINER_PROXYMANAGER}
+else
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_PROXYMANAGER not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+fi
+#######################################################################################
+if podman container exists ${CONTAINER_MARIADB}; then
+  podman start ${CONTAINER_MARIADB}
+else
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_MARIADB not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
