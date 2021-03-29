@@ -1,0 +1,8 @@
+podman run --detach \
+           --name sslproxy_db \
+           --env "MYSQL_ROOT_PASSWORD=npm" \
+           --env "MYSQL_DATABASE=npm" \
+           --env "MYSQL_USER=npm" \
+           --env "MYSQL_PASSWORD=npm" \
+           --volume /mnt/data_ext/sslproxy/mysql:/var/lib/mysql \
+           jc21/mariadb-aria:latest
