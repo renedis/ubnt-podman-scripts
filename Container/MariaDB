@@ -1,7 +1,6 @@
 docker run --privileged -d --name=mariadb \
  --net mariadb \
  --dns 10.0.5.3 \
- --hostname mariadb-RD-ROUT01 \
  --restart always \
  -v /etc/localtime:/etc/localtime:ro \
  -v /mnt/data/proxymanager/mysql:/var/lib/mysql \
