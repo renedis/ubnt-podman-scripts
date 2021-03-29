@@ -1,8 +1,12 @@
-podman run --detach \
-           --name sslproxy_db \
-           --env "MYSQL_ROOT_PASSWORD=npm" \
-           --env "MYSQL_DATABASE=npm" \
-           --env "MYSQL_USER=npm" \
-           --env "MYSQL_PASSWORD=npm" \
-           --volume /mnt/data_ext/sslproxy/mysql:/var/lib/mysql \
-           jc21/mariadb-aria:latest
+docker run --privileged -d --name=mariadb \
+ --net mariadb \
+ --dns 10.0.5.3 \
+ --hostname mariadb-RD-ROUT01 \
+ --restart always \
+ -v /etc/localtime:/etc/localtime:ro \
+ -v /mnt/data/proxymanager/mysql:/var/lib/mysql \
+ -e MYSQL_ROOT_PASSWORD=npm" \
+ -e MYSQL_DATABASE=npm" \
+ -e MYSQL_USER=npm" \
+ -e MYSQL_PASSWORD=npm" \
+ jc21/mariadb-aria:latest
