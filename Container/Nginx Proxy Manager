@@ -1,8 +1,13 @@
-podman run --detach \
-           --name sslproxy_app \
-           --network host \
-           --privileged \
-           --volume /etc/localtime:/etc/localtime:ro \
-           --volume /mnt/data_ext/sslproxy/data:/data \
-           --volume /mnt/data_ext/sslproxy/letsencrypt:/etc/letsencrypt \
-           jc21/nginx-proxy-manager:latest
+docker run --privileged -d --name=proxymanager \
+ --net proxymanager \
+ --dns 10.0.5.3 \
+ --restart always \
+ -v /etc/localtime:/etc/localtime:ro \
+ -v /mnt/data/proxymanager/data:/data \
+ -v /mnt/data/proxymanager/letsencrypt:/etc/letsencrypt \
+ -e DB_MYSQL_HOST="10.0.5.7"
+ -e DB_MYSQL_PORT="3306"
+ -e DB_MYSQL_USER="npm"
+ -e DB_MYSQL_PASSWORD="npm"
+ -e DB_MYSQL_NAME="npm"
+ jc21/nginx-proxy-manager:latest
