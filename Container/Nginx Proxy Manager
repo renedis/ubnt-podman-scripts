@@ -1,7 +1,6 @@
 docker run --privileged -d --name=proxymanager \
  --net proxymanager \
  --dns 10.0.5.3 \
- --hostname proxymanager-RD-ROUT01 \
  --restart always \
  -p 80:80 \
  -p 443:443 \
