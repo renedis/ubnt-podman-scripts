@@ -2,7 +2,9 @@
 
 ## configuration variables:
 VLAN=5
-IPV4_IP="10.0.5.4"
+IPV4_IP_NETDATA="10.0.5.4"
+IPV4_IP_GLANCES="10.0.5.5"
+
 # This is the IP address of the container. You may want to set it to match
 # your own network structure such as 192.168.5.3 or similar.
 IPV4_GW="10.0.5.1/24"
@@ -10,7 +12,8 @@ IPV4_GW="10.0.5.1/24"
 # network as above which is usually the .1/24 range of the IPV4_IP
 
 # container name; e.g. nextdns, pihole, adguardhome, etc.
-CONTAINER=netdata
+CONTAINER_NETDATA=netdata
+CONTAINER_GLANCES=glances
 
 ## network configuration and startup:
 CNI_PATH=/mnt/data/podman/cni
@@ -41,12 +44,24 @@ ip addr add ${IPV4_GW} dev br${VLAN}.mac noprefixroute
 ip link set br${VLAN}.mac promisc on
 ip link set br${VLAN}.mac up
 
+#######################################################################################
 # add IPv4 route to DNS container
-ip route add ${IPV4_IP}/32 dev br${VLAN}.mac
+ip route add ${IPV4_IP_NETDATA}/32 dev br${VLAN}.mac
+#######################################################################################
+# add IPv4 route to DNS container
+ip route add ${IPV4_IP_GLANCES}/32 dev br${VLAN}.mac
+#######################################################################################
 
-if podman container exists ${CONTAINER}; then
-  podman start ${CONTAINER}
+
+#######################################################################################
+if podman container exists ${CONTAINER_NETDATA}; then
+  podman start ${CONTAINER_NETDATA}
 else
-  logger -s -t podman-dns -p ERROR Container $CONTAINER not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_NETDATA not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
-done
+#######################################################################################
+if podman container exists ${CONTAINER_GLANCES}; then
+  podman start ${CONTAINER_GLANCES}
+else
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_GLANCES not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+fi
