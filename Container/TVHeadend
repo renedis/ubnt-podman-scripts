@@ -1,0 +1,9 @@
+docker run --privileged -d --name=tvheadend \
+ --systemd=false \
+ --net tvheadend \
+ --dns 10.0.5.3 \
+ --restart always \
+ -e TZ=Europe/Amsterdam \
+ -v /mnt/data/tvheadend/config:/config \
+ -v /mnt/data/tvheadend/recordings:/recordings \
+ linuxserver/tvheadend:latest
