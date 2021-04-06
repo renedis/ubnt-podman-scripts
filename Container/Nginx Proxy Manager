@@ -1,16 +1,10 @@
-docker run --privileged -d --name=proxymanager \
- --net proxymanager \
+docker run -d \
+ --systemd=false \
+ --network proxymanager \
+ --name proxymanager \
  --dns 10.0.5.3 \
- --restart always \
- -p 80:80 \
- -p 443:443 \
- -p 81:81 \
- -v /etc/localtime:/etc/localtime:ro \
- -v /mnt/data/proxymanager/data:/data \
- -v /mnt/data/proxymanager/letsencrypt:/etc/letsencrypt \
- -e DB_MYSQL_HOST="10.0.5.7" \
- -e DB_MYSQL_PORT="3306" \
- -e DB_MYSQL_USER="npm" \
- -e DB_MYSQL_PASSWORD="npm" \
- -e DB_MYSQL_NAME="npm" \
+ -e TZ=Europe/Amsterdam \
+ -e DB_SQLITE_FILE="/data/database.sqlite" \
+ -v "/mnt/data/proxymanager/data:/data" \
+ -v "/mnt/data/proxymanager/letsencrypt:/etc/letsencrypt" \
  jc21/nginx-proxy-manager:latest
