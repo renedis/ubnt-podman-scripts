@@ -5,6 +5,7 @@ VLAN=5
 IPV4_IP_NETDATA="10.0.5.4"
 IPV4_IP_GLANCES="10.0.5.5"
 IPV4_IP_PROXYMANAGER="10.0.5.6"
+IPV4_IP_TVHEADEND="10.0.5.8"
 
 # This is the IP address of the container. You may want to set it to match
 # your own network structure such as 192.168.5.3 or similar.
@@ -16,6 +17,7 @@ IPV4_GW="10.0.5.1/24"
 CONTAINER_NETDATA=netdata
 CONTAINER_GLANCES=glances
 CONTAINER_PROXYMANAGER=proxymanager
+CONTAINER_PROXYMANAGER=tvheadend
 
 ## network configuration and startup:
 CNI_PATH=/mnt/data/podman/cni
@@ -56,6 +58,9 @@ ip route add ${IPV4_IP_GLANCES}/32 dev br${VLAN}.mac
 # add IPv4 route to DNS container
 ip route add ${IPV4_IP_PROXYMANAGER}/32 dev br${VLAN}.mac
 #######################################################################################
+# add IPv4 route to DNS container
+ip route add ${IPV4_IP_TVHEADEND}/32 dev br${VLAN}.mac
+#######################################################################################
 
 
 #######################################################################################
@@ -76,3 +81,10 @@ if podman container exists ${CONTAINER_PROXYMANAGER}; then
 else
   logger -s -t podman-dns -p ERROR Container $CONTAINER_PROXYMANAGER not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
+#######################################################################################
+if podman container exists ${CONTAINER_TVHEADEND}; then
+  podman start ${CONTAINER_TVHEADEND}
+else
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_TVHEADEND not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+fi
+
