@@ -5,6 +5,7 @@ Containers used so far:
 - Netdata
 - Glances
 - Nginx Proxy Manager
+- TVHeadend
 
 Future idea's:
 - MQTT broker/server
