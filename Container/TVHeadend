@@ -5,5 +5,5 @@ docker run --privileged -d --name=tvheadend \
  --restart always \
  -e TZ=Europe/Amsterdam \
  -v /mnt/data/tvheadend/config:/config \
- -v /mnt/data/tvheadend/recordings:/recordings \
+ -v /mnt/data_ext/tvheadend/recordings:/recordings \
  linuxserver/tvheadend:latest
