@@ -4,4 +4,4 @@ podman run -d \
     --name adguardhome \
     -v /mnt/data/AdguardHome-Workdir:/opt/adguardhome/work \
     -v /mnt/data/AdguardHome-Confdir:/opt/adguardhome/conf \
-    -d adguard/adguardhome:latest
+    -d adguard/adguardhome:edge
