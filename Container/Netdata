@@ -1,6 +1,7 @@
 podman run --privileged -d --name=netdata \
  --net netdata \
  --dns 10.0.5.3 \
+ --memory="256m" \
  --restart always \
  --pid="host" \
  -p 19999:19999 \
@@ -11,6 +12,5 @@ podman run --privileged -d --name=netdata \
  -v /proc:/host/proc:ro \
  -v /sys:/host/sys:ro \
  -v /etc/os-release:/host/etc/os-release:ro \
- --cap-add SYS_PTRACE \
  --security-opt apparmor=unconfined \
  netdata/netdata:latest
