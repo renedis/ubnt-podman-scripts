@@ -1,5 +1,6 @@
 docker run -d \
  --systemd=false \
+ --restart always \
  --network proxymanager \
  --name proxymanager \
  --dns 10.0.5.3 \
