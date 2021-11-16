@@ -7,6 +7,7 @@ IPV4_IP_GLANCES="10.0.5.5"
 IPV4_IP_PROXYMANAGER="10.0.5.6"
 IPV4_IP_MOSQUITTO="10.0.5.7"
 IPV4_IP_TVHEADEND="10.0.5.8"
+IPV4_IP_OSCAM="10.0.5.9"
 
 # This is the IP address of the container. You may want to set it to match
 # your own network structure such as 192.168.5.3 or similar.
@@ -20,6 +21,7 @@ CONTAINER_GLANCES=glances
 CONTAINER_PROXYMANAGER=proxymanager
 CONTAINER_MOSQUITTO=mosquitto
 CONTAINER_TVHEADEND=tvheadend
+CONTAINER_OSCAM=oscam
 
 ## network configuration and startup:
 CNI_PATH=/mnt/data/podman/cni
@@ -66,6 +68,10 @@ ip route add ${IPV4_IP_MOSQUITTO}/32 dev br${VLAN}.mac
 # add IPv4 route to DNS container
 ip route add ${IPV4_IP_TVHEADEND}/32 dev br${VLAN}.mac
 #######################################################################################
+# add IPv4 route to DNS container
+ip route add ${IPV4_IP_OSCAM}/32 dev br${VLAN}.mac
+#######################################################################################
+
 
 #######################################################################################
 if podman container exists ${CONTAINER_NETDATA}; then
@@ -96,5 +102,11 @@ if podman container exists ${CONTAINER_TVHEADEND}; then
   podman start ${CONTAINER_TVHEADEND}
 else
   logger -s -t podman-dns -p ERROR Container $CONTAINER_TVHEADEND not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+fi
+#######################################################################################
+if podman container exists ${CONTAINER_OSCAM}; then
+  podman start ${CONTAINER_OSCAM}
+else
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_OSCAM not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
 
