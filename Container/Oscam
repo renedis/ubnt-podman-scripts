@@ -1,9 +1,11 @@
 docker run --privileged -d --name=oscam \
+ --systemd=false \
  --net oscam \
  --dns 10.0.5.3 \
  --restart always \
- -p 15080:15080 \
  -p 9050:9050 \
+ -p 15080:15080 \
  -e TZ=Europe/Amsterdam \
  -v /mnt/data/oscam/config:/config \
+ -v /mnt/data/oscam/log:/var/log \
  linuxserver/oscam:latest
