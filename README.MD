@@ -7,6 +7,7 @@ Containers used so far:
 - Nginx Proxy Manager
 - MQTT broker/server
 - TVHeadend
+- Oscam
 
 Future idea's:
 - Chrony/NTP
