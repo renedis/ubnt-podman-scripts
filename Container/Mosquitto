@@ -5,6 +5,7 @@ podman run -d \
   --restart always \
   -p 1883:1883 \
   -p 9001:9001 \
+  -p 443:443 \
   -v /mnt/data/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf \
   -v /mnt/data/mosquitto/config:/config \
   -v /mnt/data/mosquitto/data:/mnt/data/mosquitto/data \
