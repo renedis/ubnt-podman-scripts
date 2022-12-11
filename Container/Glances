@@ -1,4 +1,4 @@
-docker run --privileged -d --name=glances \
+#docker run --privileged -d --name=glances \
  --net glances \
  --dns 10.0.5.3 \
  --restart always \
