@@ -3,7 +3,7 @@
 ## configuration variables:
 VLAN=5
 IPV4_IP_NETDATA="10.0.5.4"
-IPV4_IP_GLANCES="10.0.5.5"
+IPV4_IP_UPTIMEKUMA="10.0.5.5"
 IPV4_IP_PROXYMANAGER="10.0.5.6"
 IPV4_IP_MOSQUITTO="10.0.5.7"
 IPV4_IP_TVHEADEND="10.0.5.8"
@@ -17,7 +17,7 @@ IPV4_GW="10.0.5.1/24"
 
 # container name; e.g. nextdns, pihole, adguardhome, etc.
 CONTAINER_NETDATA=netdata
-CONTAINER_GLANCES=glances
+CONTAINER_UPTIMEKUMA=uptimekuma
 CONTAINER_PROXYMANAGER=proxymanager
 CONTAINER_MOSQUITTO=mosquitto
 CONTAINER_TVHEADEND=tvheadend
@@ -57,7 +57,7 @@ ip link set br${VLAN}.mac up
 ip route add ${IPV4_IP_NETDATA}/32 dev br${VLAN}.mac
 #######################################################################################
 # add IPv4 route to DNS container
-ip route add ${IPV4_IP_GLANCES}/32 dev br${VLAN}.mac
+ip route add ${IPV4_IP_UPTIMEKUMA}/32 dev br${VLAN}.mac
 #######################################################################################
 # add IPv4 route to DNS container
 ip route add ${IPV4_IP_PROXYMANAGER}/32 dev br${VLAN}.mac
@@ -80,10 +80,10 @@ else
   logger -s -t podman-dns -p ERROR Container $CONTAINER_NETDATA not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
 #######################################################################################
-if podman container exists ${CONTAINER_GLANCES}; then
-  podman start ${CONTAINER_GLANCES}
+if podman container exists ${CONTAINER_UPTIMEKUMA}; then
+  podman start ${CONTAINER_UPTIMEKUMA}
 else
-  logger -s -t podman-dns -p ERROR Container $CONTAINER_GLANCES not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
+  logger -s -t podman-dns -p ERROR Container $CONTAINER_UPTIMEKUMA not found, make sure you set the proper name, you can ignore this error if it is your first time setting it up
 fi
 #######################################################################################
 if podman container exists ${CONTAINER_PROXYMANAGER}; then
